@@ -17,7 +17,7 @@ const deleteBooking = (req, res) => {
 };
 
 const updateBooking = (req, res) => {
-  bookings.forEach((booking) => {
+  bookings.forEach((booking, index) => {
     if (booking.id === req.params.id) {
       return (bookings[index] = req.body);
     }
