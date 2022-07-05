@@ -5,12 +5,12 @@ const getBookings = (req, res) => {
 };
 
 const getBooking = (req, res) => {
-  const room = bookings.find((booking) => booking.id === req.params.id);
+  const room = bookings.find((b) => b.id == req.params.id);
   return res.json(room);
 };
 
 const deleteBooking = (req, res) => {
-  const bookingId = bookings.find((booking) => booking.id === req.params.id);
+  const bookingId = bookings.find((booking) => booking.id == req.params.id);
   bookings.splice(bookingId, 1);
 
   return res.json("booking deleted");

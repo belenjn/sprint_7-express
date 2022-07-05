@@ -5,12 +5,12 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  const user = users.find((u) => u.id === req.params.id);
+  const user = users.find((u) => u.id == req.params.id);
   return res.json(user);
 };
 
 const deleteUser = (req, res) => {
-  const userId = users.find((u) => u.id === req.params.id);
+  const userId = users.find((u) => u.id == req.params.id);
   users.splice(userId, 1);
 
   return res.json("user deleted");

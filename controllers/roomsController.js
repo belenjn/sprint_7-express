@@ -5,12 +5,12 @@ const getRooms = (req, res) => {
 };
 
 const getRoom = (req, res) => {
-  const room = rooms.find((r) => r.id === req.params.id);
+  const room = rooms.find((r) => r.id == req.params.id);
   return res.json(room);
 };
 
 const deleteRoom = (req, res) => {
-  const roomId = rooms.find((room) => room.id === req.params.id);
+  const roomId = rooms.find((room) => room.id == req.params.id);
   rooms.splice(roomId, 1);
 
   return res.json("room deleted");
