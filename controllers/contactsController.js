@@ -7,12 +7,12 @@ const getContacts = (req, res) => {
 };
 
 const getContact = (req, res) => {
-  const contact = contacts.find((cont) => cont.id == req.params.id);
+  const contact = contacts.find((cont) => String(cont.id) === req.params.id);
   return res.json(contact);
 };
 
 const deleteContact = (req, res) => {
-  const contactId = contacts.find((contact) => contact.id == req.params.id);
+  const contactId = contacts.find((contact) => String(contact.id) === req.params.id);
   contacts.splice(contactId, 1);
 
   return res.json("contact deleted");
