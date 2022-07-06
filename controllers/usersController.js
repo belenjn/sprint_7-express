@@ -13,7 +13,7 @@ const deleteUser = (req, res) => {
   // const userId = users.find((u) => String(u.id) === req.params.id);
   // users.splice(userId, 1);
 
-  return res.json("user deleted");
+  return res.json({success: true, message: "User deleted"});
 };
 
 const updateUser = (req, res) => {
@@ -23,12 +23,12 @@ const updateUser = (req, res) => {
   //   }
   // });
 
-  return res.json("user updated");
+  return res.json({success: true, message: "User updated"});
 };
 
 const newUser = (req, res) => {
   // users = [...users, req.body];
-  return res.json("user added");
+  return res.json({success: true, message: "New user created"});
 };
 
 module.exports = {

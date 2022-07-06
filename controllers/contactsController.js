@@ -14,7 +14,7 @@ const deleteContact = (req, res) => {
   //   (contact) => String(contact.id) === req.params.id
   // );
 
-  return res.json("contact deleted");
+  return res.json({success: true, message: "Contact deleted"});
 };
 
 const updateContact = (req, res) => {
@@ -24,12 +24,12 @@ const updateContact = (req, res) => {
   //   }
   // });
 
-  return res.json("contact updated");
+  return res.json({success: true, message: "Contact updated"});
 };
 
 const newContact = (req, res) => {
   // contacts = [...contacts, req.body];
-  return res.json("contact added");
+  return res.json({success: true, message: "New contact created"});
 };
 
 module.exports = {

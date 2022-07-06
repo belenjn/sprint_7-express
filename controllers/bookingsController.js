@@ -13,7 +13,7 @@ const deleteBooking = (req, res) => {
   // const bookingId = bookings.find((booking) => String(booking.id) === req.params.id);
   // bookings.splice(bookingId, 1);
 
-  return res.json("booking deleted");
+  return res.json({success: true, message: "Booking deleted"});
 };
 
 const updateBooking = (req, res) => {
@@ -23,12 +23,12 @@ const updateBooking = (req, res) => {
   //   }
   // });
 
-  return res.json("booking updated");
+  return res.json({success: true, message: "Booking updated"});
 };
 
 const newBooking = (req, res) => {
   // bookings = [...bookings, req.body];
-  return res.json("booking added");
+  return res.json({success: true, message: "New booking created"});
 };
 
 module.exports = {
