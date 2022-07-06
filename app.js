@@ -9,7 +9,8 @@ var app = express();
 let bookingsRoute = require("./routes/bookings");
 let contactsRoute = require("./routes/contacts");
 let roomsRoute = require("./routes/rooms");
-let usersRoute = require("./routes/users")
+let usersRoute = require("./routes/users");
+let loginRoute = require("./routes/login");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,11 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use("/bookings", bookingsRoute);
 app.use("/contacts", contactsRoute);
 app.use("/rooms", roomsRoute);
 app.use("/users", usersRoute);
+app.use("/login", loginRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
