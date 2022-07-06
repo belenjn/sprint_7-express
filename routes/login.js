@@ -1,27 +1,32 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
-let login = require("../controllers/loginController");
+const router = express.Router();
 
-const username = req.body.username;
-const password = req.body.password;
+const { passportKey } = require("../env");
 
-var JwtStrategy = require("passport-jwt").Strategy;
+router.post("/", async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const error = new Error("An error occurred.");
 
-router.post(
-  "/",
-  passport.use(
-    new JwtStrategy(opts, function (jwt_payload, done) {
-      // jwt_payload is an object literal containing the decoded JWT payload.
-      //done is a passport error first callback accepting arguments done(error, user, info)
-
-      if (username === "belen" && password === "1234") {
-        return done(null, { username });
-      } else {
-        return done({}, false);
+        return next(error);
       }
-    })
-  )
-);
+
+      req.login(user, { session: false }, async (error) => {
+        if (error) return next(error);
+
+        const body = { _id: user._id, email: user.email };
+        const token = jwt.sign({ user: body }, passportKey);
+
+        return res.json({ token });
+      });
+    } catch (error) {
+      return next(error);
+    }
+  })(req, res, next);
+});
 
 module.exports = router;

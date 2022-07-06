@@ -1,17 +1,51 @@
-const username = req.body.username;
-const password = req.body.password;
+const passport = require("passport");
+const localStrategy = require("passport-local").Strategy;
+const JWTstrategy = require("passport-jwt").Strategy;
+const ExtractJWT = require("passport-jwt").ExtractJwt;
 
-var JwtStrategy = require("passport-jwt").Strategy;
+const user = {
+  userName: "belen@hotel.com",
+  pass: "1234",
+};
+
+const {passportKey} = require("../env")
 
 passport.use(
-  new JwtStrategy(opts, function (jwt_payload, done) {
-    // jwt_payload is an object literal containing the decoded JWT payload.
-    //done is a passport error first callback accepting arguments done(error, user, info)
-
-    if (username === "belen" && password === "1234") {
-      return done(null, { username });
-    } else {
-      return done({}, false);
+  "login",
+  new localStrategy(
+    {
+      usernameField: "userName",
+      passwordField: "password",
+    },
+    async (userName, password, done) => {
+      try {
+        console.log(userName, password, user);
+        if (userName === user.userName && password === user.pass) {
+          return done(null, user, { message: "Logged in Successfully" });
+        }
+        return done(null, false, {
+          message: "User not found or Wrong Password",
+        });
+      } catch (error) {
+        console.error(error);
+        return done(error);
+      }
     }
-  })
+  )
+);
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: passportKey,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
 );
