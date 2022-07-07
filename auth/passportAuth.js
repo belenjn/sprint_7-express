@@ -2,25 +2,26 @@ const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
+const {passportKey} = require("../env")
+
 
 const user = {
-  userName: "belen@hotel.com",
+  username: "belen@hotel.com",
   pass: "1234",
 };
 
-const {passportKey} = require("../env")
 
 passport.use(
   "login",
   new localStrategy(
     {
-      usernameField: "userName",
+      usernameField: "username",
       passwordField: "password",
     },
-    async (userName, password, done) => {
+    async (username, password, done) => {
       try {
-        console.log(userName, password, user);
-        if (userName === user.userName && password === user.pass) {
+        console.log(username, password, user);
+        if (username === user.username && password === user.pass) {
           return done(null, user, { message: "Logged in Successfully" });
         }
         return done(null, false, {
