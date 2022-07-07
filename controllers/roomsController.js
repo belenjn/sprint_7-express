@@ -5,29 +5,29 @@ const getRooms = (req, res) => {
 };
 
 const getRoom = (req, res) => {
-  // const room = rooms.find((r) => String(r.id) === req.params.id);
+  const room = rooms.find((r) => String(r.id) === req.params.id);
   return res.json(room);
 };
 
 const deleteRoom = (req, res) => {
-  // const roomId = rooms.find((room) => String(room.id) === req.params.id);
-  // rooms.splice(roomId, 1);
+  const roomId = rooms.find((room) => String(room.id) === req.params.id);
+  rooms.splice(roomId, 1);
 
   return res.json({ success: true, message: "Room deleted" });
 };
 
 const updateRoom = (req, res) => {
-  // rooms.forEach((room, index) => {
-  //   if (room.id === req.params.id) {
-  //     return (rooms[index] = req.body);
-  //   }
-  // });
+  rooms.forEach((room, index) => {
+    if (room.id === req.params.id) {
+      return (rooms[index] = req.body);
+    }
+  });
 
   return res.json({ success: true, message: "Room updated" });
 };
 
 const newRoom = (req, res) => {
-  // rooms = [...rooms, req.body];
+  rooms = [...rooms, req.body];
   return res.json({ success: true, message: "New room created" });
 };
 

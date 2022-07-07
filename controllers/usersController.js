@@ -5,30 +5,30 @@ const getUsers = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  // const user = users.find((u) => String(u.id) === req.params.id);
+  const user = users.find((u) => String(u.id) === req.params.id);
   return res.json(user);
 };
 
 const deleteUser = (req, res) => {
-  // const userId = users.find((u) => String(u.id) === req.params.id);
-  // users.splice(userId, 1);
+  const userId = users.find((u) => String(u.id) === req.params.id);
+  users.splice(userId, 1);
 
-  return res.json({success: true, message: "User deleted"});
+  return res.json({ success: true, message: "User deleted" });
 };
 
 const updateUser = (req, res) => {
-  // users.forEach((user, index) => {
-  //   if (user.id === req.params.id) {
-  //     return (users[index] = req.body);
-  //   }
-  // });
+  users.forEach((user, index) => {
+    if (user.id === req.params.id) {
+      return (users[index] = req.body);
+    }
+  });
 
-  return res.json({success: true, message: "User updated"});
+  return res.json({ success: true, message: "User updated" });
 };
 
 const newUser = (req, res) => {
-  // users = [...users, req.body];
-  return res.json({success: true, message: "New user created"});
+  users = [...users, req.body];
+  return res.json({ success: true, message: "New user created" });
 };
 
 module.exports = {
