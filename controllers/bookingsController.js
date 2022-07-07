@@ -14,7 +14,6 @@ const deleteBooking = (req, res) => {
     (booking) => String(booking.id) === req.params.id
   );
   bookings.splice(bookingId, 1);
-
   return res.json({ success: true, message: "Booking deleted" });
 };
 
@@ -24,7 +23,6 @@ const updateBooking = (req, res) => {
       return (bookings[index] = req.body);
     }
   });
-
   return res.json({ success: true, message: "Booking updated" });
 };
 
