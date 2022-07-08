@@ -28,7 +28,7 @@ const updateBooking = (req, res) => {
 
 const newBooking = (req, res) => {
   bookings = [...bookings, req.body];
-  return res.json({ success: true, message: "New booking updated" });
+  return res.json({ success: true, message: "New booking added" });
 };
 
 module.exports = {
