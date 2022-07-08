@@ -19,7 +19,7 @@ router.post("/", async (req, res, next) => {
         if (error) return next(error);
 
         const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, passportKey);
+        let token = jwt.sign({ user: body }, passportKey, {expiresIn: 604800});
 
         return res.json({ token });
       });
