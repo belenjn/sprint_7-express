@@ -1,6 +1,13 @@
 const request = require("supertest");
 const app = require("../app");
 const rooms = require("../data/rooms.json");
+const jwt = require("jsonwebtoken");
+const { passportKey } = require("../env");
+const { timeToRefreshToken } = require("../constants");
+
+const token = jwt.sign({ user: {} }, passportKey, {
+  expiresIn: timeToRefreshToken,
+});
 
 const room = {
   id: 96,
@@ -15,9 +22,6 @@ const room = {
   status: "false",
 };
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjU3MTk5NDc5fQ.Cx-4bmnIBiw_-RAo65TmdEXtezaX2J4mAJcn-xhPfM0";
-
 describe("Rooms route", () => {
   it("can't access without authorization", async () => {
     const res = await request(app).get("/rooms");
@@ -30,7 +34,6 @@ describe("Rooms route", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toMatchObject(rooms);
-
   });
 
   it("get one room", async () => {
@@ -39,7 +42,6 @@ describe("Rooms route", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toMatchObject(room);
-
   });
 
   it("delete one room", async () => {
@@ -51,7 +53,6 @@ describe("Rooms route", () => {
       success: true,
       message: "Room deleted",
     });
-    
   });
 
   it("update one room", async () => {

@@ -1,6 +1,11 @@
 const request = require("supertest");
 const app = require("../app");
 const contacts = require("../data/contacts.json");
+const jwt = require("jsonwebtoken");
+const { passportKey } = require("../env");
+const { timeToRefreshToken } = require("../constants");
+
+const token = jwt.sign({ user: {} }, passportKey, {expiresIn: timeToRefreshToken});
 
 const contact = {
   id: 1,
@@ -12,9 +17,6 @@ const contact = {
   comment:
     "ut reprehenderit velit amet occaecat consectetur irure nisi in cillum excepteur ipsum reprehenderit proident sint deserunt ea veniam consectetur sint dolor eiusmod ut culpa veniam amet minim laborum dolore consectetur minim laboris qui",
 };
-
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjU3MTk5NDc5fQ.Cx-4bmnIBiw_-RAo65TmdEXtezaX2J4mAJcn-xhPfM0";
 
 describe("Contacts route", () => {
   it("can't access without authorization", async () => {
@@ -28,7 +30,6 @@ describe("Contacts route", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toMatchObject(contacts);
-
   });
 
   it("get one contact", async () => {
@@ -37,7 +38,6 @@ describe("Contacts route", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toMatchObject(contact);
-
   });
 
   it("delete one contact", async () => {

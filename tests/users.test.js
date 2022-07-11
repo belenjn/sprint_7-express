@@ -1,6 +1,11 @@
 const request = require("supertest");
 const app = require("../app");
 const users = require("../data/users.json");
+const jwt = require("jsonwebtoken");
+const { passportKey } = require("../env");
+const { timeToRefreshToken } = require("../constants");
+
+const token = jwt.sign({ user: {} }, passportKey, {expiresIn: timeToRefreshToken});
 
 const user = {
   name_user: "Tony DuBuque",
@@ -13,8 +18,7 @@ const user = {
   status: "true",
 };
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNjU3MTk5NDc5fQ.Cx-4bmnIBiw_-RAo65TmdEXtezaX2J4mAJcn-xhPfM0";
+
 
 describe("Users route", () => {
   it("can't access without authorization", async () => {
