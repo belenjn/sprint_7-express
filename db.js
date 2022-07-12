@@ -8,5 +8,5 @@ const connection = mysql.createConnection({
   database: db_mysql,
 });
 
-module.exports = {connection}
 
+ module.exports = {connection}
