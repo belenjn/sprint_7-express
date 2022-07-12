@@ -23,18 +23,23 @@ amenities VARCHAR(255) NOT NULL
 
 ## 👯 Contacts:
 
-id: INT AUTO_INCREMENT PRIMARY KEY,contact_name: VARCHAR(255),
+contact_id INT AUTO_INCREMENT PRIMARY KEY,
 
-contact_email: VARCHAR(255) NOT NULL,
+contact_name VARCHAR(255),
 
-contact_phone: VARCHAR(255) NOT NULL,
+contact_email VARCHAR(255) NOT NULL,
 
-subject: VARCHAR(255),
+contact_phone VARCHAR(255) NOT NULL,
 
-comment: VARCHAR(255),
+contact_date DATE NOT NULL,
 
-viewed: BOOLEAN,
-archived: BOOLEAN
+subject VARCHAR(255) NOT NULL,
+
+comment TEXT NOT NULL,
+
+viewed BOOLEAN NOT NULL DEFAULT FALSE,
+
+archived BOOLEAN NOT NULL DEFAULT FALSE
 
 ## ✍️ Bookings:
 
