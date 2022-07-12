@@ -1,10 +1,7 @@
-## sprint_7.1-express
 
-## sprint_7.2-MySQL
+# MySQL tables:
 
-## MySQL tables:
-
-# 🛏 Rooms:
+## 🛏 Rooms:
 
 room_id INT AUTO_INCREMENT PRIMARY KEY,
 room_number SMALLINT NOT NULL,
@@ -16,7 +13,7 @@ discount SMALLINT,
 cancellation VARCHAR(255),
 amenities VARCHAR(255) NOT NULL
 
-# 👯 Contacts:
+## 👯 Contacts:
 
 id: INT AUTO_INCREMENT PRIMARY KEY,contact_name: VARCHAR(255),
 contact_email: VARCHAR(255) NOT NULL,
@@ -26,7 +23,7 @@ comment: VARCHAR(255),
 viewed: BOOLEAN,
 archived: BOOLEAN
 
-# ✍️ Bookings:
+## ✍️ Bookings:
 
 booking_id INT AUTO_INCREMENT PRIMARY KEY,
 guest_name VARCHAR(255) NOT NULL,
@@ -40,14 +37,14 @@ FOREIGN KEY (room_id)
 REFERENCES rooms(room_id)
 ON DELETE SET NULL
 
-# 🖼 Rooms images:
+## 🖼 Rooms images:
 
     room_id INT NOT NULL,
 
 FOREIGN KEY (room_id) REFERENCES rooms(room_id) ON DELETE CASCADE,
 url_image VARCHAR(255) NOT NULL
 
-# 🏨 Users:
+## 🏨 Users:
 
 user_id INT AUTO_INCREMENT PRIMARY KEY,
 user_name VARCHAR(255) NOT NULL,
