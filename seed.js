@@ -1,9 +1,6 @@
 const { faker } = require("@faker-js/faker");
 const { connection } = require("./db");
 
-connection.connect(function (err) {
-  if (err) throw err;
-
   // Users
   const sqlUsers =
     "INSERT INTO users (user_name, user_email, user_phone, start_date, occupation, status, user_image, password) VALUES (?)";
@@ -102,4 +99,3 @@ connection.connect(function (err) {
       console.log("Number of records inserted: " + result.affectedRows);
     });
   }
-});
