@@ -1,34 +1,81 @@
-let users = require("../data/users.json");
+const { connection } = require("../db");
 
 const getUsers = (req, res) => {
-  return res.json(users);
+  connection.query("SELECT * FROM users", (err, results) => {
+    if (err) throw err;
+    return res.json({ users: results });
+  });
 };
 
 const getUser = (req, res) => {
-  const user = users.find((u) => String(u.id) === req.params.id);
-  return res.json(user);
+  const id = req.params.id;
+  connection.query(
+    "SELECT * FROM users WHERE user_id = ?",
+    [id],
+    (err, results) => {
+      return !results
+        ? res.status(404).json({ success: false, message: "User not found" })
+        : res.json({ user: results });
+    }
+  );
 };
 
 const deleteUser = (req, res) => {
-  const userId = users.find((u) => String(u.id) === req.params.id);
-  users.splice(userId, 1);
-
-  return res.json({ success: true, message: "User deleted" });
+  const id = req.params.id;
+  connection.query(
+    "DELETE FROM users WHERE user_id = ?",
+    [id],
+    (err, results) => {
+      return !results
+        ? res.status(404).json({ success: false, message: "User not found" })
+        : res.json({ success: true, message: "User successfully deleted" });
+    }
+  );
 };
 
 const updateUser = (req, res) => {
-  users.forEach((user, index) => {
-    if (user.id === req.params.id) {
-      return (users[index] = req.body);
+  const id = req.params.id;
+  connection.query(
+    "UPDATE users SET user_name = ?, user_email = ?, user_phone = ?, start_date = ?, occupation = ?, user_image = ?, status = ?, password = ? WHERE user_id = ?",
+    [
+      req.body.user_name,
+      req.body.user_email,
+      req.body.user_phone,
+      req.body.start_date,
+      req.body.occupation,
+      req.body.user_image,
+      req.body.status,
+      req.body.password,
+      id,
+    ],
+    (err, results) => {
+      console.log(err)
+      return !results
+        ? res.status(404).json({ success: false, message: "User not found" })
+        : res.json({ success: true, message: "User successfully updated" });
     }
-  });
-
-  return res.json({ success: true, message: "User updated" });
+  );
 };
 
 const newUser = (req, res) => {
-  users = [...users, req.body];
-  return res.json({ success: true, message: "New user created" });
+  const newUser = [
+    req.body.user_name,
+    req.body.user_email,
+    req.body.user_phone,
+    req.body.start_date,
+    req.body.occupation,
+    req.body.user_image,
+    req.body.status,
+    req.body.password,
+  ];
+  connection.query(
+    "INSERT INTO users (user_name, user_email, user_phone, start_date, occupation, user_image,status, password) VALUES (?)",
+    [newUser],
+    (err, results) => {
+      if (err) throw err;
+      return res.json({ success: true, message: "User successfully added" });
+    }
+  );
 };
 
 module.exports = {
