@@ -1,7 +1,6 @@
 const { connection } = require("../db");
 
 const getBookings = (req, res) => {
-  // return res.json(bookings);
   connection.query("SELECT * FROM bookings", (error, results, fields) => {
     return res.json({ bookings: results });
   });
