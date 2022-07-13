@@ -47,7 +47,7 @@ const updateBooking = (req, res) => {
     (err, results) => {
       console.log(err);
       return !results
-        ? res.status(404).json({ success: false, message: "User not found" })
+        ? res.status(404).json({ success: false, message: "Booking not found" })
         : res.json({ success: true, message: "Booking successfully updated" });
     }
   );

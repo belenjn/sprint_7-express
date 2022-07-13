@@ -1,35 +1,81 @@
-let contacts = require("../data/contacts.json");
+const { connection } = require("../db");
 
 const getContacts = (req, res) => {
-  return res.json(contacts);
+  connection.query("SELECT * FROM contacts", (error, results, fields) => {
+    return res.json({ contacts: results });
+  });
 };
 
 const getContact = (req, res) => {
-  const contact = contacts.find((cont) => String(cont.id) === req.params.id);
-  return res.json(contact);
+  const id = req.params.id;
+  connection.query(
+    "SELECT * from contacts WHERE contact_id = ?",
+    [id],
+    (error, results, fields) => {
+      return res.json({ contacts: results });
+    }
+  );
 };
 
 const deleteContact = (req, res) => {
-  const contactId = contacts.find(
-    (contact) => String(contact.id) === req.params.id
+  const id = req.params.id;
+  connection.query(
+    "DELETE from contacts WHERE contact_id = ?",
+    [id],
+    (err, results) => {
+      return !results
+        ? res.status(404).json({ success: false, message: "Contact not found" })
+        : res.json({ success: true, message: "Contact successfully deleted" });
+    }
   );
-
-  return res.json({ success: true, message: "Contact deleted" });
-};
+}
 
 const updateContact = (req, res) => {
-  contacts.forEach((contact, index) => {
-    if (String(contact.id) === req.params.id) {
-      return console.log((contacts[index] = req.body));
+  const id = req.params.id;
+  connection.query(
+    "UPDATE contacts SET contact_name = ?, contact_email = ?, contact_phone = ?, contact_date = ?, subject = ?, comment = ?, viewed = ?, archived = ? WHERE contact_id = ?",
+    [
+      req.body.contact_name,
+      req.body.contact_email,
+      req.body.contact_phone,
+      req.body.contact_date,
+      req.body.subject,
+      req.body.comment,
+      req.body.viewed,
+      req.body.archived,
+      id,
+    ],
+    (err, results) => {
+      console.log(err);
+      return !results
+        ? res.status(404).json({ success: false, message: "Contact not found" })
+        : res.json({ success: true, message: "Contact successfully updated" });
     }
-  });
-
-  return res.json({ success: true, message: "Contact updated" });
+  );
 };
 
 const newContact = (req, res) => {
-  contacts = [...contacts, req.body];
-  return res.json({ success: true, message: "New contact created" });
+  const newContactData = [
+    req.body.contact_name,
+    req.body.contact_email,
+    req.body.contact_phone,
+    req.body.contact_date,
+    req.body.subject,
+    req.body.comment,
+    req.body.viewed,
+    req.body.archived,
+  ];
+  connection.query(
+    "INSERT INTO contacts(contact_name, contact_email, contact_phone, contact_date, subject, comment, viewed, archived) VALUES(?)",
+    [newContactData],
+    (err, results) => {
+      console.log(err);
+      return res.json({
+        success: true,
+        message: "Contact successfully created",
+      });
+    }
+  );
 };
 
 module.exports = {
