@@ -29,7 +29,7 @@ connection.connect(function (err) {
     "INSERT INTO contacts (contact_name, contact_email, contact_phone, contact_date, subject, comment, viewed, archived) VALUES (?)";
   for (let i = 0; i < 10; i++) {
     let values = [
-      faker.name.firstName() + faker.name.lastName(),
+      faker.name.firstName() + " " + faker.name.lastName(),
       faker.internet.email(),
       faker.phone.number("###-###-###"),
       faker.date.past(),
@@ -67,16 +67,39 @@ connection.connect(function (err) {
         )
         .join(" "),
     ];
-    for (let j = 1; j <= 5; j++) {
-      const sqlImages = `INSERT INTO rooms_images (room_id, url_image) VALUES (${i}, ${faker.image.imageUrl()})`;
 
-      connection.query(sqlRooms, [values], function (err, result) {
+    connection.query(sqlRooms, [values], function (err, result) {
+      if (err) throw err;
+      console.log("Number of records inserted: " + result.affectedRows);
+    });
+
+    // Room_images
+    for (let j = 1; j <= 5; j++) {
+      const sqlImages =
+        "INSERT INTO room_images (room_id, url_image) VALUES (?)";
+      let values = [i, faker.image.imageUrl("", "", "", true)];
+      connection.query(sqlImages, [values], function (err, result) {
         if (err) throw err;
         console.log("Number of records inserted: " + result.affectedRows);
       });
     }
+  }
 
-    //Rellenar tabla rooms_images
-    //Rellenar tabla bookings
+  const sqlBookings =
+    "INSERT INTO bookings (guest_name, order_date, checkin, checkout, special_request, room_id, status) VALUES (?)";
+  for (let i = 0; i < 10; i++) {
+    let values = [
+      faker.name.firstName() + " " + faker.name.lastName(),
+      faker.date.past(),
+      faker.date.future(),
+      faker.date.future(),
+      faker.hacker.phrase(),
+      Math.floor(Math.random() * (10 - 1) + 1),
+      faker.helpers.arrayElement(["checkIn", "checkOut", "inProgress"]),
+    ];
+    connection.query(sqlBookings, [values], function (err, result) {
+      if (err) throw err;
+      console.log("Number of records inserted: " + result.affectedRows);
+    });
   }
 });
