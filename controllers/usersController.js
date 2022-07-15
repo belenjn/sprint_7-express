@@ -50,7 +50,7 @@ const deleteUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const id = req.params.id;
-  const { error } = bookingSchema.validate(req.body, { abortEarly: false });
+  const { error } = userSchema.validate(req.body, { abortEarly: false });
   if (error) {
     return res.status(400).json({ sucess: false, message: error.message });
   } else {
@@ -78,6 +78,8 @@ const updateUser = (req, res) => {
 };
 
 const newUser = (req, res) => {
+  const { error } = userSchema.validate(req.body, { abortEarly: false });
+
   const newUser = [
     req.body.user_name,
     req.body.user_email,
@@ -88,7 +90,6 @@ const newUser = (req, res) => {
     req.body.status,
     req.body.password,
   ];
-  const { error } = bookingSchema.validate(req.body, { abortEarly: false });
   if (error) {
     return res.status(400).json({ sucess: false, message: error.message });
   } else {
