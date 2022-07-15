@@ -1,5 +1,8 @@
 const { connection } = require("../db");
 const Joi = require("joi");
+const bcrypt = require("bcrypt");
+
+
 
 const userSchema = Joi.object({
   user_name: Joi.string().max(30).required(),
@@ -64,7 +67,7 @@ const updateUser = (req, res) => {
         req.body.occupation,
         req.body.user_image,
         req.body.status,
-        req.body.password,
+        bcrypt.hashSync(req.body.password, 5),
         id,
       ],
       (err, results) => {
@@ -88,7 +91,7 @@ const newUser = (req, res) => {
     req.body.occupation,
     req.body.user_image,
     req.body.status,
-    req.body.password,
+    bcrypt.hashSync(req.body.password, 5),
   ];
   if (error) {
     return res.status(400).json({ sucess: false, message: error.message });

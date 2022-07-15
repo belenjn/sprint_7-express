@@ -1,5 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const { connection } = require("./db");
+const bcrypt = require("bcrypt");
+
 
   // Users
   const sqlUsers =
@@ -13,7 +15,7 @@ const { connection } = require("./db");
       faker.helpers.arrayElement(["manager", "reception", "room_service"]),
       faker.helpers.arrayElement([0, 1]),
       faker.image.avatar(),
-      faker.internet.password(),
+      bcrypt.hashSync(faker.internet.password(), 5)
     ];
     connection.query(sqlUsers, [values], function (err, result) {
       if (err) throw err;
