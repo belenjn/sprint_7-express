@@ -10,7 +10,6 @@ const user = {
   pass: "1234",
 };
 
-
 passport.use(
   "login",
   new localStrategy(

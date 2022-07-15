@@ -6,28 +6,31 @@ const router = express.Router();
 
 const { passportKey } = require("../env");
 
-router.post("/", async (req, res, next) => {
-  passport.authenticate("login", async (err, user, info) => {
-    try {
-      if (err || !user) {
-        const error = new Error("An error occurred.");
 
+router.post("/", async (req, res, next) => {
+
+    passport.authenticate("login", async (err, user, info) => {
+      try {
+        if (err || !user) {
+          const error = new Error("An error occurred.");
+
+          return next(error);
+        }
+
+        req.login(user, { session: false }, async (error) => {
+          if (error) return next(error);
+
+          const body = { _id: user._id, email: user.email };
+          let token = jwt.sign({ user: body }, passportKey, {
+            expiresIn: 604800,
+          });
+
+          return res.json({ token });
+        });
+      } catch (error) {
         return next(error);
       }
-
-      req.login(user, { session: false }, async (error) => {
-        if (error) return next(error);
-
-        const body = { _id: user._id, email: user.email };
-        let token = jwt.sign({ user: body }, passportKey, {expiresIn: 604800});
-
-        return res.json({ token });
-      });
-    } catch (error) {
-      return next(error);
-    }
-  })(req, res, next);
+    })(req, res, next);
 });
 
 module.exports = router;
-

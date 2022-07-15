@@ -2,8 +2,6 @@ const { connection } = require("../db");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 
-
-
 const userSchema = Joi.object({
   user_name: Joi.string().max(30).required(),
   user_email: Joi.string().email().required(),
@@ -14,7 +12,7 @@ const userSchema = Joi.object({
   start_date: Joi.date().required(),
   occupation: Joi.string().valid("manager", "reception", "room_service"),
   status: Joi.number().min(0).max(1),
-  photo: Joi.string(),
+  user_image: Joi.string(),
   password: Joi.string().min(6).max(25),
 });
 
