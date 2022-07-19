@@ -3,18 +3,24 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const roomsSchema = new Schema({
-  room_number: Number,
-  bed_type: Array,
+  room_number: {
+    type: Number,
+    default: 0,
+  },
+  bed_type: String,
   description: String,
-  offer: Number,
+  offer: Boolean,
   price: {
     type: Number,
     default: 0,
   },
-  discount: Number,
+  discount: {
+    type: Number,
+    default: 0,
+  },
   cancellation: String,
-  amenities: String,
-}, {collection: "rooms"});
+  amenities: Array,
+});
 
 module.exports = {roomsSchema}
 

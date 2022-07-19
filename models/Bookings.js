@@ -8,9 +8,12 @@ const bookingsSchema = new Schema({
   checkin: Date,
   checkout: Date,
   special_request: String,
-  room_id: Number,
+  room_id: {
+    type: Number,
+    default: 1,
+  },
   status: Boolean,
-}, {collection: "bookings"});
+});
 
 module.exports = {bookingsSchema}
 

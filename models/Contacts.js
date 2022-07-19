@@ -9,9 +9,9 @@ const contactsSchema = new Schema({
   contact_Date: Date,
   subject: String,
   comment: String,
-  viewed: Number,
-  archived: Number,
-}, {collection: "contacts"});
+  viewed: Boolean,
+  archived: Boolean,
+});
 
 
 module.exports = {contactsSchema}
