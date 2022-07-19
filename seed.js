@@ -24,12 +24,7 @@ for (let i = 0; i < 10; i++) {
   console.log(newUser);
   users.push(newUser);
   Users.insertMany(users)
-    .then(function () {
-      console.log("Data inserted"); // Success
-    })
-    .catch(function (error) {
-      console.log(error); // Failure
-    });
+
 }
 
 /*
