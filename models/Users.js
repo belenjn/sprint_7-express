@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-export const usersSchema = new Schema({
+const usersSchema = new Schema({
   user_id: Number,
   user_name: String,
   user_email: String,
@@ -12,3 +12,6 @@ export const usersSchema = new Schema({
   user_image: String,
   password: String
 });
+
+module.exports = model('Users', usersSchema);
+

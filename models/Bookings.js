@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-export const bookingsSchema = new Schema({
+const bookingsSchema = new Schema({
   booking_id: Number,
   guest_name: String,
   order_date: Date,
@@ -11,3 +11,6 @@ export const bookingsSchema = new Schema({
   room_id: Number,
   status: Boolean,
 });
+
+module.exports = model('Bookings', bookingsSchema);
+

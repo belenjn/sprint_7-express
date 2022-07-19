@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-export const contactsSchema = new Schema({
+const contactsSchema = new Schema({
   contact_id: Number,
   contact_name: String,
   contact_email: String,
@@ -12,3 +12,6 @@ export const contactsSchema = new Schema({
   viewed: Number,
   archived: Number,
 });
+
+
+module.exports = model('Contacts', contactsSchema);
