@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
 
 const bookingsSchema = new Schema({
-  booking_id: Number,
   guest_name: String,
   order_date: Date,
   checkin: Date,
@@ -12,5 +12,5 @@ const bookingsSchema = new Schema({
   status: Boolean,
 });
 
-module.exports = model('Bookings', bookingsSchema);
+module.exports = {bookingsSchema}
 

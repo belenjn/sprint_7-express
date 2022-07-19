@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
 
 const roomsSchema = new Schema({
-  room_id: Number,
   room_number: Number,
   bed_type: Array,
   description: String,
@@ -16,4 +16,5 @@ const roomsSchema = new Schema({
   amenities: String,
 });
 
-module.exports = model("Rooms", roomsSchema);
+module.exports = {roomsSchema}
+

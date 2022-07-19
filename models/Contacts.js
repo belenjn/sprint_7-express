@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
 
 const contactsSchema = new Schema({
-  contact_id: Number,
   contact_name: String,
   contact_email: String,
   contact_phone: String,
@@ -14,4 +14,5 @@ const contactsSchema = new Schema({
 });
 
 
-module.exports = model('Contacts', contactsSchema);
+module.exports = {contactsSchema}
+
