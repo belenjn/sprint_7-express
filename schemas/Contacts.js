@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const contactsSchema = new Schema({
+export const contactsSchema = new Schema({
   contact_id: Number,
   contact_name: String,
   contact_email: String,

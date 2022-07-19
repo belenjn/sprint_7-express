@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const bookingSchema = new Schema({
+export const bookingsSchema = new Schema({
   booking_id: Number,
   guest_name: String,
   order_date: Date,

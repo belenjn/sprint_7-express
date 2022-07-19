@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('./auth/passportAuth')
+// require('./db')
 
 const passport = require('passport');
 
