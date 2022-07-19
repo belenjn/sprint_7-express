@@ -13,13 +13,13 @@ const mongoConnection = async () => {
     });
     const room = new Room({
       room_number: 2,
-      bed_type: ['single', 'double'],
-      description: 'jdbfjkdndsf',
+      bed_type: ["single", "double"],
+      description: "jdbfjkdndsf",
       offer: 23,
       price: 400,
       discount: 0,
-      cancellation: 'test',
-      amenities: 'testing',
+      cancellation: "test",
+      amenities: "testing",
     });
 
     console.log(room);
