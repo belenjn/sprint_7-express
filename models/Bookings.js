@@ -10,7 +10,7 @@ const bookingsSchema = new Schema({
   special_request: String,
   room_id: Number,
   status: Boolean,
-});
+}, {collection: "bookings"});
 
 module.exports = {bookingsSchema}
 

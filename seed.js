@@ -1,28 +1,38 @@
+const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
-const { connection } = require("./db");
 const bcrypt = require("bcrypt");
+const { usersSchema } = require("./models/Users");
 
+const Users = mongoose.model("users", usersSchema);
 
-  // Users
-  const sqlUsers =
-    "INSERT INTO users (user_name, user_email, user_phone, start_date, occupation, status, user_image, password) VALUES (?)";
-  for (let i = 0; i < 10; i++) {
-    let values = [
-      faker.name.firstName() + faker.name.lastName(),
-      faker.internet.email(),
-      faker.phone.number("###-###-###"),
-      faker.date.past(),
-      faker.helpers.arrayElement(["manager", "reception", "room_service"]),
-      faker.helpers.arrayElement([0, 1]),
-      faker.image.avatar(),
-      bcrypt.hashSync(faker.internet.password(), 5)
-    ];
-    connection.query(sqlUsers, [values], function (err, result) {
-      if (err) throw err;
-      console.log("Number of records inserted: " + result.affectedRows);
+let users = [];
+for (let i = 0; i < 10; i++) {
+  let newUser = {
+    user_name: faker.name.firstName() + " " + faker.name.lastName(),
+    user_email: faker.internet.email(),
+    user_phone: faker.phone.number("###-###-###"),
+    start_date: faker.date.past(),
+    occupation: faker.helpers.arrayElement([
+      "manager",
+      "reception",
+      "room_service",
+    ]),
+    status: faker.helpers.arrayElement([0, 1]),
+    user_image: faker.image.avatar(),
+    password: bcrypt.hashSync(faker.internet.password(), 5),
+  };
+  console.log(newUser);
+  users.push(newUser);
+  Users.insertMany(users)
+    .then(function () {
+      console.log("Data inserted"); // Success
+    })
+    .catch(function (error) {
+      console.log(error); // Failure
     });
-  }
+}
 
+/*
   // Contacts
   const sqlContacts =
     "INSERT INTO contacts (contact_name, contact_email, contact_phone, contact_date, subject, comment, viewed, archived) VALUES (?)";
@@ -101,3 +111,4 @@ const bcrypt = require("bcrypt");
       console.log("Number of records inserted: " + result.affectedRows);
     });
   }
+*/

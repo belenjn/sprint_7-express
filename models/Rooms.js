@@ -14,7 +14,7 @@ const roomsSchema = new Schema({
   discount: Number,
   cancellation: String,
   amenities: String,
-});
+}, {collection: "rooms"});
 
 module.exports = {roomsSchema}
 

@@ -11,7 +11,7 @@ const contactsSchema = new Schema({
   comment: String,
   viewed: Number,
   archived: Number,
-});
+}, {collection: "contacts"});
 
 
 module.exports = {contactsSchema}
