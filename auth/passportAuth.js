@@ -20,6 +20,12 @@ passport.use(
       const db_user = await User.findOne({
         user_email: username,
       });
+      if (!db_user) {
+        return done(null, false, {
+          success: false,
+          message: "User not found",
+        });
+      }
       try {
         if (username === db_user.user_email) {
           bcrypt.compare(password, db_user.password, function (err, res) {
@@ -34,11 +40,6 @@ passport.use(
                 message: "Wrong Password",
               });
             }
-          });
-        } else {
-          return done(null, false, {
-            success: false,
-            message: "User not found",
           });
         }
       } catch (error) {
