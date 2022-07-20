@@ -1,5 +1,6 @@
 require("../db");
 const User = require("../models/Users");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   const users = await User.find();
@@ -28,7 +29,7 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: req.params.id },
       {
         user_name: req.body.user_name,
@@ -38,7 +39,7 @@ const updateUser = async (req, res) => {
         occupation: req.body.occupation,
         status: req.body.status,
         user_image: req.body.user_image,
-        password: req.body.password,
+        password: bcrypt.hashSync(req.body.password, 5),
       }
     );
     return res.json({ success: true, message: "User successfully updated" });
@@ -50,7 +51,16 @@ const updateUser = async (req, res) => {
 
 const newUser = async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const newUser = new User({
+      user_name: req.body.user_name,
+      user_email: req.body.user_email,
+      user_phone: req.body.user_phone,
+      start_date: req.body.start_date,
+      occupation: req.body.occupation,
+      status: req.body.status,
+      user_image: req.body.user_image,
+      password: bcrypt.hashSync(req.body.password, 5),
+    });
     await newUser.save();
     return res.json({ success: true, message: "User successfully added" });
   } catch (error) {

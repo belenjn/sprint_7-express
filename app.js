@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
 
 require("./auth/passportAuth");
 require("./db");
@@ -11,6 +13,8 @@ require("./db");
 const passport = require("passport");
 
 var app = express();
+mongoose.set('useFindAndModify', false);
+
 
 let bookingsRoute = require("./routes/bookings");
 let contactsRoute = require("./routes/contacts");
