@@ -1,11 +1,11 @@
 require("../db");
 const app = require("../app");
-const model = require("../models/Users")
+const User = require("../models/Users")
 
 
 const getUsers = (req, res) => {
   app.get("/users", function (req, res) {
-    model.find({}, function (err, users) {
+    User.find({}, function (err, users) {
       res.status(200).send(users);
     });
   });
