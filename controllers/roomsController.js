@@ -1,34 +1,62 @@
-let rooms = require("../data/rooms.json");
+require("../db");
+const Room = require("../models/Rooms");
 
-const getRooms = (req, res) => {
+const getRooms = async (req, res) => {
+  const rooms = await Room.find();
   return res.json(rooms);
 };
 
-const getRoom = (req, res) => {
-  const room = rooms.find((r) => String(r.id) === req.params.id);
-  return res.json(room);
+const getRoom = async (req, res) => {
+  try {
+    const room = await Room.findOne({ _id: req.params.id });
+    return res.json(room);
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Room not found" });
+    console.log(error);
+  }
 };
 
-const deleteRoom = (req, res) => {
-  const roomId = rooms.find((room) => String(room.id) === req.params.id);
-  rooms.splice(roomId, 1);
-
-  return res.json({ success: true, message: "Room deleted" });
+const deleteRoom = async (req, res) => {
+  try {
+    await Room.findOneAndDelete({ _id: req.params.id });
+    return res.json({ success: true, message: "Room successfully deleted" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Room not found" });
+    console.log(error);
+  }
 };
 
-const updateRoom = (req, res) => {
-  rooms.forEach((room, index) => {
-    if (room.id === req.params.id) {
-      return (rooms[index] = req.body);
-    }
-  });
-
-  return res.json({ success: true, message: "Room updated" });
+const updateRoom = async (req, res) => {
+  try {
+    await Room.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        room_number: req.body.room_number,
+        bed_type: req.body.bed_type,
+        offer: req.body.offer,
+        price: req.body.price,
+        discount: req.body.discount,
+        cancellation: req.body.cancellation,
+        amenities: req.body.amenities,
+        images: req.body.images,
+      }
+    );
+    return res.json({ success: true, message: "Room successfully updated" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Room not found" });
+    console.log(error);
+  }
 };
 
-const newRoom = (req, res) => {
-  rooms = [...rooms, req.body];
-  return res.json({ success: true, message: "New room created" });
+const newRoom = async (req, res) => {
+  try {
+    const newRoom = new Room(req.body);
+    await newRoom.save();
+    return res.json({ success: true, message: "Room successfully added" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Room not found" });
+    console.log(error);
+  }
 };
 
 module.exports = {
