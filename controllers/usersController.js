@@ -1,15 +1,10 @@
 require("../db");
-const app = require("../app");
-const User = require("../models/Users")
+const User = require("../models/Users");
 
-
-const getUsers = (req, res) => {
-  app.get("/users", function (req, res) {
-    User.find({}, function (err, users) {
-      res.status(200).send(users);
-    });
-  });
-}
+const getUsers = async (req, res) => {
+  const users = await User.find();
+  return res.json(users);
+};
 
 const getUser = (req, res) => {
   const user = users.find((u) => String(u.id) === req.params.id);

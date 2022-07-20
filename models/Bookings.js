@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const bookingsSchema = new Schema({
   guest_name: String,
@@ -15,5 +15,5 @@ const bookingsSchema = new Schema({
   status: String,
 });
 
-module.exports = {bookingsSchema}
+module.exports = model("Booking", bookingsSchema)
 

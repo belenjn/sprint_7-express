@@ -7,10 +7,10 @@ const { roomsSchema } = require("./models/Rooms");
 const { bookingsSchema } = require("./models/Bookings");
 require("./db");
 
-const User = mongoose.model("users", usersSchema);
-const Contact = mongoose.model("contacts", contactsSchema);
-const Room = mongoose.model("rooms", roomsSchema);
-const Booking = mongoose.model("bookings", bookingsSchema);
+const User = require("./models/User");
+const Booking = require("./models/Booking");
+const Contact = require("./models/Contact");
+const Room = require("./models/Room");
 
 async function saveItem(item) {
   await item.save();

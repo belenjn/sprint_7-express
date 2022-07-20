@@ -4,12 +4,12 @@ const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const {passportKey} = require("../env")
 
+require("../db");
 
 const user = {
   username: "belen@hotel.com",
-  pass: "1234",
+  pass: "123456",
 };
-
 
 passport.use(
   "login",

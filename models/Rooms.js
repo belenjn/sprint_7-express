@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 
 const roomsSchema = new Schema({
   room_number: {
@@ -23,5 +23,5 @@ const roomsSchema = new Schema({
   images: Array
 });
 
-module.exports = {roomsSchema}
+module.exports = model("Room", roomsSchema)
 
