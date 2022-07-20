@@ -6,31 +6,43 @@ const getUsers = async (req, res) => {
   return res.json(users);
 };
 
-const getUser = (req, res) => {
-  const user = users.find((u) => String(u.id) === req.params.id);
-  return res.json(user);
+const getUser = async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  return !user
+    ? res.status(404).json({ success: false, message: "User not found" })
+    : res.json(user);
 };
 
-const deleteUser = (req, res) => {
-  const userId = users.find((u) => String(u.id) === req.params.id);
-  users.splice(userId, 1);
-
-  return res.json({ success: true, message: "User deleted" });
+const deleteUser = async (req, res) => {
+  const user = await User.findOneAndDelete({ _id: req.params.id });
+  return !user
+    ? res.status(404).json({ success: false, message: "User not found" })
+    : res.json({ success: true, message: "User successfully deleted" });
 };
 
-const updateUser = (req, res) => {
-  users.forEach((user, index) => {
-    if (user.id === req.params.id) {
-      return (users[index] = req.body);
+const updateUser = async (req, res) => {
+  const user = await User.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      user_name: req.body.user_name,
+      user_email: req.body.user_email,
+      user_phone: req.body.user_phone,
+      start_date: req.body.start_date,
+      occupation: req.body.occupation,
+      status: req.body.status,
+      user_image: req.body.user_image,
+      password: req.body.password,
     }
-  });
-
-  return res.json({ success: true, message: "User updated" });
+  );
+  return !user
+    ? res.status(404).json({ success: false, message: "User not found" })
+    : res.json({ success: true, message: "User successfully updated" });
 };
 
-const newUser = (req, res) => {
-  users = [...users, req.body];
-  return res.json({ success: true, message: "New user created" });
+const newUser = async (req, res) => {
+  const newUser = new User(req.body);
+  await newUser.save();
+  return res.json({ success: true, message: "User successfully added" });
 };
 
 module.exports = {
