@@ -20,6 +20,7 @@ const roomsSchema = new Schema({
   },
   cancellation: String,
   amenities: Array,
+  images: Array
 });
 
 module.exports = {roomsSchema}

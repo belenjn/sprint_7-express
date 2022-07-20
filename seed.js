@@ -2,12 +2,20 @@ const mongoose = require("mongoose");
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const { usersSchema } = require("./models/Users");
+const { contactsSchema } = require("./models/Contacts");
+const { roomsSchema } = require("./models/Rooms");
+const { bookingsSchema } = require("./models/Bookings");
+require("./db");
 
-const Users = mongoose.model("users", usersSchema);
+const User = mongoose.model("users", usersSchema);
+const Contact = mongoose.model("contacts", contactsSchema);
+const Room = mongoose.model("rooms", roomsSchema);
+const Booking = mongoose.model("bookings", bookingsSchema);
 
-let users = [];
+/* 
+// User's collection
 for (let i = 0; i < 10; i++) {
-  let newUser = {
+  let newUser = new User({
     user_name: faker.name.firstName() + " " + faker.name.lastName(),
     user_email: faker.internet.email(),
     user_phone: faker.phone.number("###-###-###"),
@@ -20,90 +28,90 @@ for (let i = 0; i < 10; i++) {
     status: faker.helpers.arrayElement([0, 1]),
     user_image: faker.image.avatar(),
     password: bcrypt.hashSync(faker.internet.password(), 5),
-  };
-  console.log(newUser);
-  users.push(newUser);
-  Users.insertMany(users)
+  });
 
+  newUser.save((err, document) => {
+    if (err) console.log(err);
+    console.log(document);
+  });
 }
 
-/*
-  // Contacts
-  const sqlContacts =
-    "INSERT INTO contacts (contact_name, contact_email, contact_phone, contact_date, subject, comment, viewed, archived) VALUES (?)";
-  for (let i = 0; i < 10; i++) {
-    let values = [
-      faker.name.firstName() + " " + faker.name.lastName(),
-      faker.internet.email(),
-      faker.phone.number("###-###-###"),
-      faker.date.past(),
-      faker.hacker.phrase(),
-      faker.lorem.sentence(),
-      faker.helpers.arrayElement([0, 1]),
-      faker.helpers.arrayElement([0, 1]),
-    ];
-    connection.query(sqlContacts, [values], function (err, result) {
-      if (err) throw err;
-      console.log("Number of records inserted: " + result.affectedRows);
-    });
-  }
+// Contact's collection
+for (let i = 0; i < 10; i++) {
+  let newContact = new Contact({
+    contact_name: faker.name.firstName() + " " + faker.name.lastName(),
+    contact_email: faker.internet.email(),
+    contact_phone: faker.phone.number("###-###-###"),
+    contact_date: faker.date.past(),
+    subject: faker.hacker.phrase(),
+    comment: faker.lorem.sentence(),
+    viewed: faker.helpers.arrayElement([0, 1]),
+    archived: faker.helpers.arrayElement([0, 1]),
+  });
 
-  // Rooms
-  const sqlRooms =
-    "INSERT INTO rooms (room_number, bed_type, description, offer, price, discount, cancellation, amenities) VALUES (?)";
-  for (let i = 1; i <= 10; i++) {
-    let values = [
-      i,
-      faker.helpers.arrayElement([
-        "single_bed",
-        "double_bed",
-        "double_superior",
-        "suite",
-      ]),
-      faker.lorem.sentence(10),
-      faker.helpers.arrayElement([0, 1]),
-      faker.finance.amount(50, 100, 0),
-      faker.finance.amount(0, 15, 0),
-      faker.lorem.sentence(10),
-      ["TV", "WIFI", "BATHROOM-KIT"]
-        .concat(
-          faker.helpers.arrayElements(["JACUZZI", "HAIR-DRYER", "MINIBAR"], 2)
-        )
-        .join(" "),
-    ];
+  newContact.save((err, document) => {
+    if (err) console.log(err);
+    console.log(document);
+  });
+}
 
-    connection.query(sqlRooms, [values], function (err, result) {
-      if (err) throw err;
-      console.log("Number of records inserted: " + result.affectedRows);
-    });
-
-    // Room_images
-    for (let j = 1; j <= 5; j++) {
-      const sqlImages =
-        "INSERT INTO room_images (room_id, url_image) VALUES (?)";
-      let values = [i, faker.image.imageUrl("", "", "", true)];
-      connection.query(sqlImages, [values], function (err, result) {
-        if (err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows);
-      });
-    }
-  }
-
-  const sqlBookings =
-    "INSERT INTO bookings (guest_name, order_date, checkin, checkout, special_request, room_id, status) VALUES (?)";
-  for (let i = 0; i < 10; i++) {
-    let values = [
-      faker.name.firstName() + " " + faker.name.lastName(),
-      faker.date.past(),
-      faker.date.future(),
-      faker.date.future(),
-      faker.hacker.phrase(),
-      Math.floor(Math.random() * (10 - 1) + 1),
-      faker.helpers.arrayElement(["checkIn", "checkOut", "inProgress"]),
-    ];
-    connection.query(sqlBookings, [values], function (err, result) {
-      if (err) throw err;
-      console.log("Number of records inserted: " + result.affectedRows);
-    });
-  }
 */
+
+// Room's collection
+const rooms = [];
+
+for (let i = 0; i < 10; i++) {
+  let newRoom = new Room({
+    room_number: i,
+    bed_type: faker.helpers.arrayElement([
+      "single_bed",
+      "double_bed",
+      "double_superior",
+      "suite",
+    ]),
+    description: faker.lorem.sentence(10),
+    offer: faker.helpers.arrayElement([0, 1]),
+    price: faker.finance.amount(50, 100, 0),
+    discount: faker.finance.amount(0, 15, 0),
+    cancellation: faker.lorem.sentence(10),
+    amenities: ["TV", "WIFI", "BATHROOM-KIT"]
+      .concat(
+        faker.helpers.arrayElements(["JACUZZI", "HAIR-DRYER", "MINIBAR"], 2)
+      )
+      .join(" "),
+    images: [
+      faker.image.imageUrl("", "", "", true),
+      faker.image.imageUrl("", "", "", true),
+      faker.image.imageUrl("", "", "", true),
+      faker.image.imageUrl("", "", "", true),
+      faker.image.imageUrl("", "", "", true),
+    ],
+  });
+
+  newRoom.save((err, document) => {
+    if (err) console.log(err);
+    console.log(document);
+  });
+  rooms.push(newRoom);
+}
+
+// Booking's collection
+
+for (let i = 0; i < 10; i++) {
+  let index = Math.floor(Math.random() * 9);
+  let newBooking = new Booking({
+    guest_name: faker.name.firstName() + " " + faker.name.lastName(),
+    order_date: faker.date.past(),
+    checkin: faker.date.future(),
+    checkout: faker.date.future(),
+    special_request: faker.hacker.phrase(),
+    room_id: rooms[index]._id,
+    status: faker.helpers.arrayElement(["checkin", "checkout", "in_progress"]),
+  });
+
+  newBooking.save((err, document) => {
+    if (err) console.log(err);
+    console.log(document);
+  });
+
+}
