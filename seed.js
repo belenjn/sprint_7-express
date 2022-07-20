@@ -13,9 +13,9 @@ const Room = mongoose.model("rooms", roomsSchema);
 const Booking = mongoose.model("bookings", bookingsSchema);
 
 async function saveItem(item) {
-    await item.save();
-    console.log(item);
-  }
+  await item.save();
+  console.log(item);
+}
 
 // User's collection
 for (let i = 0; i < 10; i++) {
@@ -52,7 +52,6 @@ for (let i = 0; i < 10; i++) {
 
   saveItem(newContact);
 }
-
 
 // Room's collection
 const rooms = [];
@@ -104,5 +103,4 @@ for (let i = 0; i < 10; i++) {
   });
 
   saveItem(newBooking);
-
 }
