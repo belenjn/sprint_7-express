@@ -28,22 +28,21 @@ const deleteBooking = async (req, res) => {
 
 const updateBooking = async (req, res) => {
   try {
-    await Room.findOneAndUpdate(
+     await Booking.findOneAndUpdate(
       { _id: req.params.id },
       {
-        room_number: req.body.room_number,
-        bed_type: req.body.bed_type,
-        offer: req.body.offer,
-        price: req.body.price,
-        discount: req.body.discount,
-        cancellation: req.body.cancellation,
-        amenities: req.body.amenities,
-        images: req.body.images,
+        guest_name: req.body.guest_name,
+        order_date: req.body.order_date,
+        checkin: req.body.checkin,
+        checkout: req.body.checkout,
+        special_request: req.body.special_request,
+        room_id: req.body.room_id,
+        status: req.body.status,
       }
     );
-    return res.json({ success: true, message: "Room successfully updated" });
+    return res.json({ success: true, message: "Booking successfully updated" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Room not found" });
+    res.status(404).json({ success: false, message: "Booking not found" });
     console.log(error);
   }
 };
