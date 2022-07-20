@@ -1,35 +1,61 @@
-let contacts = require("../data/contacts.json");
+require("../db");
+const Contact = require("../models/Contacts");
 
-const getContacts = (req, res) => {
+const getContacts = async (req, res) => {
+  const contacts = await Contact.find();
   return res.json(contacts);
 };
 
-const getContact = (req, res) => {
-  const contact = contacts.find((cont) => String(cont.id) === req.params.id);
-  return res.json(contact);
+const getContact = async (req, res) => {
+  try {
+    const contact = await Contact.findOne({ _id: req.params.id });
+    return res.json(contact);
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Contact not found" });
+    console.log(error);
+  }
 };
 
-const deleteContact = (req, res) => {
-  const contactId = contacts.find(
-    (contact) => String(contact.id) === req.params.id
-  );
-
-  return res.json({ success: true, message: "Contact deleted" });
+const deleteContact = async (req, res) => {
+  try {
+    const contact = await Contact.findOneAndDelete({ _id: req.params.id });
+    return res.json({ success: true, message: "Contact successfully deleted" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Contact not found" });
+    console.log(error);
+  }
 };
 
-const updateContact = (req, res) => {
-  contacts.forEach((contact, index) => {
-    if (String(contact.id) === req.params.id) {
-      return console.log((contacts[index] = req.body));
-    }
-  });
-
-  return res.json({ success: true, message: "Contact updated" });
+const updateContact = async (req, res) => {
+  try {
+    const contact = await Contact.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        contact_name: req.body.contact_name,
+        contact_email: req.body.contact_email,
+        contact_phone: req.body.contact_phone,
+        contact_date: req.body.contact_date,
+        subject: req.body.subject,
+        comment: req.body.comment,
+        viewed: req.body.viewed,
+        archived: req.body.archived,
+      }
+    );
+    return res.json({ success: true, message: "Contact successfully updated" });
+  } catch (error) {
+    res.status(404).json({ success: false, message: "Contact not found" });
+    console.log(error);
+  }
 };
 
-const newContact = (req, res) => {
-  contacts = [...contacts, req.body];
-  return res.json({ success: true, message: "New contact created" });
+const newContact = async (req, res) => {
+  try {
+    const newContact = new Contact(req.body);
+    await newContact.save();
+    return res.json({ success: true, message: "Contact successfully added" });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
