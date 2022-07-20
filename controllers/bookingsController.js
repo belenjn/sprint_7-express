@@ -8,7 +8,7 @@ const getBookings = async (req, res) => {
 
 const getBooking = async (req, res) => {
   try {
-    const booking = await Booking.findOne({ _id: req.params.id});
+    const booking = await Booking.findOne({ _id: req.params.id });
     return res.json(booking);
   } catch (error) {
     res.status(404).json({ success: false, message: "Booking not found" });
@@ -28,7 +28,7 @@ const deleteBooking = async (req, res) => {
 
 const updateBooking = async (req, res) => {
   try {
-     await Booking.findOneAndUpdate(
+    await Booking.findOneAndUpdate(
       { _id: req.params.id },
       {
         guest_name: req.body.guest_name,
