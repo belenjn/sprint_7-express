@@ -1,13 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+const bodyParser = require("body-parser");
 
-require('./auth/passportAuth')
-// require('./db')
+require("./auth/passportAuth");
+require("./db");
 
-const passport = require('passport');
+const passport = require("passport");
 
 var app = express();
 
@@ -26,7 +27,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use(
+  bodyParser.urlencoded({
+    limit: "20mb",
+    extended: true,
+  })
+);
+app.use(
+  bodyParser.json({
+    limit: "20mb",
+  })
+);
 
 app.use("/login", loginRoute);
 app.use(
@@ -57,6 +68,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ success: false, message: "Error: " + err.status });
 });
-
 
 module.exports = app;

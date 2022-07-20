@@ -1,8 +1,15 @@
-let users = require("../data/users.json");
+require("../db");
+const app = require("../app");
+const model = require("../models/Users")
+
 
 const getUsers = (req, res) => {
-  return res.json(users);
-};
+  app.get("/users", function (req, res) {
+    model.find({}, function (err, users) {
+      res.status(200).send(users);
+    });
+  });
+}
 
 const getUser = (req, res) => {
   const user = users.find((u) => String(u.id) === req.params.id);

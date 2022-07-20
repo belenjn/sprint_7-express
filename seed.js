@@ -12,7 +12,11 @@ const Contact = mongoose.model("contacts", contactsSchema);
 const Room = mongoose.model("rooms", roomsSchema);
 const Booking = mongoose.model("bookings", bookingsSchema);
 
-/* 
+async function saveItem(item) {
+    await item.save();
+    console.log(item);
+  }
+
 // User's collection
 for (let i = 0; i < 10; i++) {
   let newUser = new User({
@@ -30,10 +34,7 @@ for (let i = 0; i < 10; i++) {
     password: bcrypt.hashSync(faker.internet.password(), 5),
   });
 
-  newUser.save((err, document) => {
-    if (err) console.log(err);
-    console.log(document);
-  });
+  saveItem(newUser);
 }
 
 // Contact's collection
@@ -49,13 +50,9 @@ for (let i = 0; i < 10; i++) {
     archived: faker.helpers.arrayElement([0, 1]),
   });
 
-  newContact.save((err, document) => {
-    if (err) console.log(err);
-    console.log(document);
-  });
+  saveItem(newContact);
 }
 
-*/
 
 // Room's collection
 const rooms = [];
@@ -88,10 +85,7 @@ for (let i = 0; i < 10; i++) {
     ],
   });
 
-  newRoom.save((err, document) => {
-    if (err) console.log(err);
-    console.log(document);
-  });
+  saveItem(newRoom);
   rooms.push(newRoom);
 }
 
@@ -109,9 +103,6 @@ for (let i = 0; i < 10; i++) {
     status: faker.helpers.arrayElement(["checkin", "checkout", "in_progress"]),
   });
 
-  newBooking.save((err, document) => {
-    if (err) console.log(err);
-    console.log(document);
-  });
+  saveItem(newBooking);
 
 }
