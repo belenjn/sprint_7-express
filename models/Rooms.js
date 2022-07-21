@@ -6,6 +6,7 @@ const roomsSchema = new Schema({
   room_number: {
     type: Number,
     unique: true,
+    required: true,
     default: 0,
   },
   bed_type: String,
@@ -13,7 +14,7 @@ const roomsSchema = new Schema({
   offer: Boolean,
   price: {
     type: Number,
-    default: 0,
+    default: 50,
   },
   discount: {
     type: Number,

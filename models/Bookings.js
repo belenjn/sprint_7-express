@@ -3,14 +3,24 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const bookingsSchema = new Schema({
-  guest_name: String,
+  guest_name: {
+    type: String,
+    required: true
+  },
   order_date: Date,
-  checkin: Date,
-  checkout: Date,
+  checkin: {
+    type: Date,
+    required: true
+  },
+  checkout: {
+    type: Date,
+    required: true
+  },
   special_request: String,
   room_id: {
     type: Schema.ObjectId,
     unique: true,
+    required: true,
     ref: "rooms"
   },
   status: String,
