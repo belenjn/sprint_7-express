@@ -11,7 +11,7 @@ const getContact = async (req, res) => {
     const contact = await Contact.findOne({ _id: req.params.id });
     return res.json(contact);
   } catch (error) {
-    res.status(404).json({ success: false, message: "Contact not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -21,7 +21,7 @@ const deleteContact = async (req, res) => {
     const contact = await Contact.findOneAndDelete({ _id: req.params.id });
     return res.json({ success: true, message: "Contact successfully deleted" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Contact not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -43,7 +43,7 @@ const updateContact = async (req, res) => {
     );
     return res.json({ success: true, message: "Contact successfully updated" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Contact not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -54,6 +54,7 @@ const newContact = async (req, res) => {
     await newContact.save();
     return res.json({ success: true, message: "Contact successfully added" });
   } catch (error) {
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };

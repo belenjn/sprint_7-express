@@ -11,7 +11,7 @@ const getRoom = async (req, res) => {
     const room = await Room.findOne({ _id: req.params.id });
     return res.json(room);
   } catch (error) {
-    res.status(404).json({ success: false, message: "Room not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -21,7 +21,7 @@ const deleteRoom = async (req, res) => {
     await Room.findOneAndDelete({ _id: req.params.id });
     return res.json({ success: true, message: "Room successfully deleted" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Room not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -43,7 +43,7 @@ const updateRoom = async (req, res) => {
     );
     return res.json({ success: true, message: "Room successfully updated" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Room not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
@@ -54,7 +54,7 @@ const newRoom = async (req, res) => {
     await newRoom.save();
     return res.json({ success: true, message: "Room successfully added" });
   } catch (error) {
-    res.status(404).json({ success: false, message: "Room not found" });
+    res.json({ success: false, message: error.message });
     console.log(error);
   }
 };
