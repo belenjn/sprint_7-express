@@ -8,7 +8,10 @@ const contactsSchema = new Schema({
     type: String,
     unique: true
   },
-  contact_phone: String,
+  contact_phone: {
+    type: String,
+    unique: true
+  },
   contact_Date: Date,
   subject: String,
   comment: String,
