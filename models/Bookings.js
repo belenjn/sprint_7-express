@@ -19,7 +19,6 @@ const bookingsSchema = new Schema({
   special_request: String,
   room_id: {
     type: Schema.ObjectId,
-    unique: true,
     required: true,
     ref: "rooms"
   },

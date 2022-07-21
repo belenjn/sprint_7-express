@@ -9,12 +9,10 @@ const usersSchema = new Schema({
   },
   user_email: {
     type: String,
-    unique: true,
     required: true
   },
   user_phone: {
     type: String,
-    unique: true,
     required: true
   },
   start_date: Date,
@@ -26,7 +24,6 @@ const usersSchema = new Schema({
   user_image: String,
   password: {
     type: String,
-    unique: true,
     required: true
   }
 });

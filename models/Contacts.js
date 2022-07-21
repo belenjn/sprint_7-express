@@ -9,12 +9,10 @@ const contactsSchema = new Schema({
   },
   contact_email: {
     type: String,
-    unique: true,
     required: true
   },
   contact_phone: {
     type: String,
-    unique: true,
     required: true
   },
   contact_Date: Date,
