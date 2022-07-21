@@ -5,6 +5,7 @@ const { Schema, model } = mongoose;
 const roomsSchema = new Schema({
   room_number: {
     type: Number,
+    unique: true,
     default: 0,
   },
   bed_type: String,
