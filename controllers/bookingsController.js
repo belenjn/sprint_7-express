@@ -11,8 +11,8 @@ const getBooking = async (req, res) => {
     const booking = await Booking.findOne({ _id: req.params.id });
     return res.json(booking);
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -21,8 +21,8 @@ const deleteBooking = async (req, res) => {
     await Booking.findOneAndDelete({ _id: req.params.id });
     return res.json({ success: true, message: "Booking successfully deleted" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -42,8 +42,8 @@ const updateBooking = async (req, res) => {
     );
     return res.json({ success: true, message: "Booking successfully updated" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -53,8 +53,8 @@ const newBooking = async (req, res) => {
     await newBooking.save();
     return res.json({ success: true, message: "Booking successfully added" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

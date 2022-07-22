@@ -12,8 +12,9 @@ const getUser = async (req, res) => {
     const user = await User.findOne({ _id: req.params.id });
     return res.json(user);
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+
   }
 };
 
@@ -22,8 +23,9 @@ const deleteUser = async (req, res) => {
     const user = await User.findOneAndDelete({ _id: req.params.id });
     return res.json({ success: true, message: "User successfully deleted" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+
   }
 };
 
@@ -44,8 +46,9 @@ const updateUser = async (req, res) => {
     );
     return res.json({ success: true, message: "User successfully updated" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+
   }
 };
 
@@ -64,8 +67,8 @@ const newUser = async (req, res) => {
     await newUser.save();
     return res.json({ success: true, message: "User successfully added" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+   return res.status(500).json({ success: false, message: error.message });
   }
 };
 

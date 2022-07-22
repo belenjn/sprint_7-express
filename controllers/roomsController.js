@@ -11,8 +11,8 @@ const getRoom = async (req, res) => {
     const room = await Room.findOne({ _id: req.params.id });
     return res.json(room);
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -21,8 +21,8 @@ const deleteRoom = async (req, res) => {
     await Room.findOneAndDelete({ _id: req.params.id });
     return res.json({ success: true, message: "Room successfully deleted" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -43,8 +43,8 @@ const updateRoom = async (req, res) => {
     );
     return res.json({ success: true, message: "Room successfully updated" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -54,8 +54,8 @@ const newRoom = async (req, res) => {
     await newRoom.save();
     return res.json({ success: true, message: "Room successfully added" });
   } catch (error) {
-    res.json({ success: false, message: error.message });
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
