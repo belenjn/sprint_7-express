@@ -23,7 +23,7 @@ passport.use(
       if (!db_user) {
         return done(null, false, {
           success: false,
-          message: "User not found",
+          message: "Invalid user",
         });
       }
       try {
@@ -37,7 +37,7 @@ passport.use(
             } else {
               return done(null, false, {
                 success: false,
-                message: "Wrong Password",
+                message: "Invalid Password",
               });
             }
           });
