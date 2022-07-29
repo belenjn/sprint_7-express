@@ -21,6 +21,7 @@ let contactsRoute = require("./routes/contacts");
 let roomsRoute = require("./routes/rooms");
 let usersRoute = require("./routes/users");
 let loginRoute = require("./routes/login");
+const { host } = require("./env");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -33,7 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', host);
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
