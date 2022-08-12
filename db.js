@@ -3,7 +3,7 @@ const { user_mysql, password_mysql, db_mysql } = require("./env");
 
 const connection = mysql.createConnection({
   host: "localhost",
-  user: user_mysql,
+  user: "root",
   password: password_mysql,
   database: db_mysql,
 });
