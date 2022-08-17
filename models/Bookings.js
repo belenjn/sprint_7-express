@@ -5,25 +5,29 @@ const { Schema, model } = mongoose;
 const bookingsSchema = new Schema({
   guest_name: {
     type: String,
-    required: true
+    required: true,
   },
   order_date: Date,
   checkin: {
     type: Date,
-    required: true
+    required: true,
   },
   checkout: {
     type: Date,
-    required: true
+    required: true,
   },
   special_request: String,
   room_id: {
     type: Schema.ObjectId,
     required: true,
-    ref: "rooms"
+    ref: "rooms",
   },
   status: String,
+  checkedin: {
+    type: Boolean,
+    default: false,
+  },
+  reference: String,
 });
 
-module.exports = model("Booking", bookingsSchema)
-
+module.exports = model("Booking", bookingsSchema);
