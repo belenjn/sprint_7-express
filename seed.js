@@ -101,7 +101,8 @@ for (let i = 0; i < 10; i++) {
     room_id: rooms[index]._id,
     status: faker.helpers.arrayElement(["checkin", "checkout", "in_progress"]),
     checkedin: faker.datatype.boolean(),
-    reference: faker.random.alpha({count: 5, casing: 'upper', bannedChars: ['A'] })
+    reference: faker.random.alpha({count: 7, casing: 'upper'})
+
   });
 
   saveItem(newBooking);

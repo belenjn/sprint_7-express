@@ -58,10 +58,27 @@ const newBooking = async (req, res) => {
   }
 };
 
+const bookingReference = async (req, res) => {
+  try {
+    const booking = await Booking.findOne({reference: req.body.reference});
+    if(booking){
+      booking.checkedin = true;
+      await booking.save();
+      return res.json({booking: booking});
+    } else {
+      return res.status(404).json({success: false, message: "Reference not found"})
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({success: false, message: error.message})
+  }
+};
+
 module.exports = {
   deleteBooking,
   getBooking,
   getBookings,
   updateBooking,
   newBooking,
+  bookingReference
 };
