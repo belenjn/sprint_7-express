@@ -1,5 +1,6 @@
 require("../db");
 const Booking = require("../models/Bookings");
+const Rooms = require("../models/Rooms");
 
 const getBookings = async (req, res) => {
   const bookings = await Booking.find();
@@ -60,17 +61,30 @@ const newBooking = async (req, res) => {
 
 const bookingReference = async (req, res) => {
   try {
-    const booking = await Booking.findOne({reference: req.body.reference});
-    if(booking){
+    const booking = await Booking.findOne({ reference: req.body.reference });
+    if (booking) {
       booking.checkedin = true;
       await booking.save();
-      return res.json({booking: booking});
+      return res.json({ booking: booking });
     } else {
-      return res.status(404).json({success: false, message: "Reference not found"})
+      return res
+        .status(404)
+        .json({ success: false, message: "Reference not found" });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({success: false, message: error.message})
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const bookingPrice = async (req, res) => {
+  try {
+    const booking = Booking.find({ reference: req.body.reference });
+    const room = Rooms.find({ id: booking.room_id });
+    return res.json({ booking: { ...booking, room: room } });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -80,5 +94,6 @@ module.exports = {
   getBookings,
   updateBooking,
   newBooking,
-  bookingReference
+  bookingReference,
+  bookingPrice
 };
