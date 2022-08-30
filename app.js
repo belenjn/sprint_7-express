@@ -30,16 +30,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/login", loginRoute);
 app.use(
   "/bookings",
-  passport.authenticate("jwt", { session: false }),
   bookingsRoute
 );
 app.use(
   "/contacts",
-  passport.authenticate("jwt", { session: false }),
   contactsRoute
 );
-app.use("/rooms", passport.authenticate("jwt", { session: false }), roomsRoute);
-app.use("/users", passport.authenticate("jwt", { session: false }), usersRoute);
+app.use("/rooms", roomsRoute);
+app.use("/users", usersRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
