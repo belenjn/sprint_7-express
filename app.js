@@ -42,6 +42,7 @@ app.use("/users", usersRoute);
 app.get('/', function (req, res) {
   res.send('GET request to the homepage');
 });
+//
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
