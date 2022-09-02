@@ -3,6 +3,7 @@ var router = express.Router();
 let rooms = require("../controllers/roomsController");
 
 router.get("/", rooms.getRooms);
+router.get("/publicRooms", rooms.getPublicRooms);
 router.post("/", rooms.newRoom);
 router.get("/:id", rooms.getRoom);
 router.put("/:id", rooms.updateRoom);

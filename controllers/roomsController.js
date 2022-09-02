@@ -6,6 +6,11 @@ const getRooms = async (req, res) => {
   return res.json(rooms);
 };
 
+const getPublicRooms = async (req, res) => {
+  const rooms = await Room.find();
+  return res.json(rooms);
+}
+
 const getRoom = async (req, res) => {
   try {
     const room = await Room.findOne({ _id: req.params.id });
@@ -63,6 +68,7 @@ module.exports = {
   deleteRoom,
   getRoom,
   getRooms,
+  getPublicRooms,
   updateRoom,
   newRoom,
 };

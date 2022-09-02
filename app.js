@@ -62,17 +62,19 @@ app.use(
 app.use("/login", loginRoute);
 app.use(
   "/bookings",
+  passport.authenticate("jwt", { session: false }),
   bookingsRoute
 );
 // quite el auth
 app.use(
   "/contacts",
+  passport.authenticate("jwt", { session: false }),
   contactsRoute
 );
-app.use("/rooms", roomsRoute);
-app.use("/users", usersRoute);
+app.use("/rooms", passport.authenticate("jwt", { session: false }), roomsRoute);
+app.use("/publicRooms", roomsRoute);
+app.use("/users",passport.authenticate("jwt", { session: false }), usersRoute);
 
-// passport.authenticate("jwt", { session: false }) deleted
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
