@@ -6,15 +6,13 @@ var logger = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-
 require("./auth/passportAuth");
 require("./db");
 
 const passport = require("passport");
 
 var app = express();
-mongoose.set('useFindAndModify', false);
-
+mongoose.set("useFindAndModify", false);
 
 let bookingsRoute = require("./routes/bookings");
 let contactsRoute = require("./routes/contacts");
@@ -27,24 +25,29 @@ const { host } = require("./env");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', host);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PATCH, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header("Access-Control-Allow-Origin", host);
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PATCH, DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   next();
 });
 app.use((req, res, next) => {
-  if(req.method === 'OPTIONS'){
+  if (req.method === "OPTIONS") {
     return res.end();
-  }else{
-    next()
+  } else {
+    next();
   }
 });
 app.use(
@@ -73,8 +76,7 @@ app.use(
 );
 app.use("/rooms", passport.authenticate("jwt", { session: false }), roomsRoute);
 app.use("/publicRooms", roomsRoute);
-app.use("/users",passport.authenticate("jwt", { session: false }), usersRoute);
-
+app.use("/users", passport.authenticate("jwt", { session: false }), usersRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
