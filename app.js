@@ -78,6 +78,7 @@ app.use("/rooms", passport.authenticate("jwt", { session: false }), roomsRoute);
 app.use("/publicRooms", roomsRoute);
 app.use("/users", passport.authenticate("jwt", { session: false }), usersRoute);
 
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
