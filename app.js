@@ -65,7 +65,7 @@ app.use(
   passport.authenticate("jwt", { session: false }),
   bookingsRoute
 );
-// quite el auth
+
 app.use(
   "/contacts",
   passport.authenticate("jwt", { session: false }),
